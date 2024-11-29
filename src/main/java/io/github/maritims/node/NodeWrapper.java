@@ -130,7 +130,7 @@ public abstract class NodeWrapper {
 
         String destinationDirectory;
         try {
-            destinationDirectory = new File(nodeConfiguration.getExtractionDirectory().toString()).getCanonicalPath();
+            destinationDirectory = nodeConfiguration.getExtractionDirectory().toFile().getCanonicalPath();
         } catch (IOException e) {
             log.error("Unable to get canonical path for extraction destination", e);
             return false;
@@ -138,7 +138,7 @@ public abstract class NodeWrapper {
 
         while(tarEntry != null) {
             Path path = Paths.get(destinationDirectory, tarEntry.getName());
-            File file = new File(path.toString());
+            File file = path.toFile();
 
             if(tarEntry.isDirectory() && !file.exists() && !file.mkdirs()) {
                 log.error("Unable to create directory: " + path + ". Aborting.");
